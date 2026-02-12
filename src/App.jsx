@@ -16,6 +16,8 @@ import {
   Smartphone,
   Laptop,
   Globe,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import resumePDF from "./assets/Lungani Xulu CV_02-02-2026.pdf";
 import lungaImage from "./assets/me.jpg";
@@ -27,6 +29,12 @@ function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [expandedProject, setExpandedProject] = useState(null);
+  
+  // Modal state
+  const [modalOpen, setModalOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState(null);
+  const [currentProject, setCurrentProject] = useState(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     setIsVisible(true);
@@ -38,6 +46,18 @@ function App() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
+
+  // Prevent body scroll when modal is open
+  useEffect(() => {
+    if (modalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [modalOpen]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -51,6 +71,56 @@ function App() {
   const handleProjectClick = (index) => {
     setExpandedProject(expandedProject === index ? null : index);
   };
+
+  // Modal functions
+  const openModal = (project, imageUrl, index) => {
+    setCurrentProject(project);
+    setCurrentImage(imageUrl);
+    setCurrentImageIndex(index);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    setCurrentImage(null);
+    setCurrentProject(null);
+  };
+
+  const nextImage = (e) => {
+    e.stopPropagation();
+    if (currentProject) {
+      const nextIndex = (currentImageIndex + 1) % currentProject.screenshots.length;
+      setCurrentImage(currentProject.screenshots[nextIndex].url);
+      setCurrentImageIndex(nextIndex);
+    }
+  };
+
+  const prevImage = (e) => {
+    e.stopPropagation();
+    if (currentProject) {
+      const prevIndex = (currentImageIndex - 1 + currentProject.screenshots.length) % currentProject.screenshots.length;
+      setCurrentImage(currentProject.screenshots[prevIndex].url);
+      setCurrentImageIndex(prevIndex);
+    }
+  };
+
+  // Handle keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!modalOpen) return;
+      
+      if (e.key === 'Escape') {
+        closeModal();
+      } else if (e.key === 'ArrowRight') {
+        nextImage(e);
+      } else if (e.key === 'ArrowLeft') {
+        prevImage(e);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [modalOpen, currentImageIndex, currentProject]);
 
   // Enhanced email handler with pre-populated content
   const handleEmailClick = (e) => {
@@ -105,36 +175,6 @@ Best regards,
 
   const projects = [
     {
-      title: "U-Access",
-      category: "Mobile Development",
-      gradient: "linear-gradient(135deg, #008080 0%, #006666 100%)",
-      description:
-        "Digitized student access cards for contactless entry. Built clean, responsive UI and smooth navigation across devices.",
-      tech: ["React Native", "JavaScript", "Firebase", "UI/UX Design"],
-      features: [
-        "Contactless entry system for students",
-        "Responsive UI across all devices",
-        "Secure authentication system",
-        "Real-time access logging",
-      ],
-      screenshots: [
-        {
-          url: "https://via.placeholder.com/300x600/008080/ffffff?text=U-Access+Login",
-          caption: "Login Screen",
-        },
-        {
-          url: "https://via.placeholder.com/300x600/006666/ffffff?text=Access+Dashboard",
-          caption: "Dashboard",
-        },
-        {
-          url: "https://via.placeholder.com/300x600/00a3a3/ffffff?text=Profile+View",
-          caption: "Profile Management",
-        },
-      ],
-      github: "#",
-      color: "bg-teal-600",
-    },
-    {
       title: "RoadGuard",
       category: "Mobile Development",
       gradient: "linear-gradient(135deg, #6a0dad 0%, #5a0c9a 100%)",
@@ -183,8 +223,9 @@ Best regards,
           caption: "Service Completion",
         },
       ],
-      github: "#",
+      github: "https://github.com/SolethuCodes/RoadGuard",
       color: "bg-purple-600",
+      type: "mobile",
     },
     {
       title: "CampusBites",
@@ -226,8 +267,9 @@ Best regards,
           caption: "Restaurant View",
         },
       ],
-      github: "#",
+      github: "https://github.com/SolethuCodes/CampusBites",
       color: "bg-gradient-to-r from-teal-600 to-purple-600",
+      type: "web",
     },
     {
       title: "Forever",
@@ -270,8 +312,9 @@ Best regards,
           caption: "Product Details",
         },
       ],
-      github: "#",
+      github: "https://github.com/SolethuCodes/Forever",
       color: "bg-gray-800",
+      type: "web",
     },
   ];
 
@@ -293,6 +336,11 @@ Best regards,
       { name: "Webpack/Vite", level: 80 },
       { name: "Chrome DevTools", level: 70 },
     ],
+  };
+
+  // Helper function to get aspect ratio based on project type
+  const getAspectRatio = (projectType) => {
+    return projectType === "mobile" ? "aspect-[9/16]" : "aspect-[16/9]";
   };
 
   return (
@@ -324,7 +372,51 @@ Best regards,
           0%, 100% { opacity: 0.3; }
           50% { opacity: 0.5; }
         }
-        
+
+        @keyframes modalSlideIn {
+          from {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes modalBgFadeIn {
+          from {
+            opacity: 0;
+            backdrop-filter: blur(0px);
+          }
+          to {
+            opacity: 1;
+            backdrop-filter: blur(8px);
+          }
+        }
+
+        @keyframes slideLeft {
+          from {
+            opacity: 0;
+            transform: translateX(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        @keyframes slideRight {
+          from {
+            opacity: 0;
+            transform: translateX(-20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
         .animate-float {
           animation: float 6s ease-in-out infinite;
         }
@@ -345,6 +437,22 @@ Best regards,
         .animate-fadeIn {
           animation: fadeIn 0.5s ease-out forwards;
         }
+
+        .animate-modal-in {
+          animation: modalSlideIn 0.3s ease-out;
+        }
+
+        .animate-modal-bg {
+          animation: modalBgFadeIn 0.3s ease-out forwards;
+        }
+
+        .animate-slide-left {
+          animation: slideLeft 0.3s ease-out;
+        }
+
+        .animate-slide-right {
+          animation: slideRight 0.3s ease-out;
+        }
         
         .rotate-180 {
           transform: rotate(180deg);
@@ -357,7 +465,173 @@ Best regards,
         .bg-gradient-to-r.from-teal-600.to-purple-600 {
           background: linear-gradient(135deg, #008080 0%, #6a0dad 100%);
         }
+
+        /* Custom scrollbar for modal */
+        .modal-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+
+        .modal-scrollbar::-webkit-scrollbar-track {
+          background: rgba(31, 41, 55, 0.5);
+          border-radius: 10px;
+        }
+
+        .modal-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(107, 114, 128, 0.5);
+          border-radius: 10px;
+        }
+
+        .modal-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(156, 163, 175, 0.5);
+        }
+
+        /* Glass morphism effect */
+        .glass-effect {
+          background: rgba(17, 24, 39, 0.8);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(75, 85, 99, 0.3);
+        }
+
+        .glass-effect-dark {
+          background: rgba(0, 0, 0, 0.9);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+        }
       `}</style>
+
+      {/* Image Modal */}
+      {modalOpen && currentProject && (
+        <div 
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-modal-bg"
+          style={{ backgroundColor: 'rgba(0, 0, 0, 0.95)' }}
+          onClick={closeModal}
+        >
+          {/* Modal Content */}
+          <div 
+            className="relative max-w-7xl w-full h-[90vh] flex flex-col lg:flex-row items-center justify-center gap-6 animate-modal-in"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              onClick={closeModal}
+              className="absolute top-4 right-4 z-50 p-3 bg-gray-800/80 hover:bg-gray-700 rounded-full transition-all duration-300 hover:scale-110 glass-effect group"
+              aria-label="Close modal"
+            >
+              <X size={24} className="text-gray-300 group-hover:text-white transition-colors" />
+            </button>
+
+            {/* Image Counter */}
+            <div className="absolute top-4 left-4 z-50 px-4 py-2 bg-gray-800/80 rounded-full glass-effect">
+              <span className="text-sm text-gray-300">
+                <span className="text-blue-400 font-semibold">{currentImageIndex + 1}</span> / {currentProject.screenshots.length}
+              </span>
+            </div>
+
+            {/* Main Image Section */}
+            <div className="relative w-full lg:w-3/4 h-[50vh] lg:h-[80vh] flex items-center justify-center">
+              {/* Navigation Arrows */}
+              {currentProject.screenshots.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-2 lg:-left-6 z-40 p-3 bg-gray-800/80 hover:bg-gray-700 rounded-full transition-all duration-300 hover:scale-110 glass-effect group"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={24} className="text-gray-300 group-hover:text-white transition-colors" />
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-2 lg:-right-6 z-40 p-3 bg-gray-800/80 hover:bg-gray-700 rounded-full transition-all duration-300 hover:scale-110 glass-effect group"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={24} className="text-gray-300 group-hover:text-white transition-colors" />
+                  </button>
+                </>
+              )}
+
+              {/* Image Container */}
+              <div className="relative w-full h-full flex items-center justify-center p-4">
+                <div 
+                  className="relative max-w-full max-h-full rounded-xl overflow-hidden shadow-2xl"
+                  style={{
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+                  }}
+                >
+                  <img
+                    src={currentImage}
+                    alt={currentProject.screenshots[currentImageIndex].caption}
+                    className="max-w-full max-h-[50vh] lg:max-h-[70vh] w-auto h-auto object-contain rounded-xl"
+                  />
+                  
+                  {/* Image Caption */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6">
+                    <p className="text-white text-lg font-medium">
+                      {currentProject.screenshots[currentImageIndex].caption}
+                    </p>
+                    <p className="text-gray-300 text-sm mt-1">
+                      {currentProject.title} - {currentProject.category}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Thumbnails Sidebar - Desktop */}
+            <div className="hidden lg:block w-1/4 h-[80vh] overflow-y-auto pr-2 modal-scrollbar">
+              <div className="space-y-3">
+                <h4 className="text-white font-semibold mb-4 text-lg sticky top-0 bg-gray-900/90 py-2 px-3 rounded-lg glass-effect">
+                  All Screenshots
+                </h4>
+                {currentProject.screenshots.map((screenshot, idx) => (
+                  <div
+                    key={idx}
+                    onClick={() => {
+                      setCurrentImage(screenshot.url);
+                      setCurrentImageIndex(idx);
+                    }}
+                    className={`group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-[1.02] ${
+                      currentImageIndex === idx
+                        ? 'border-blue-500 shadow-lg shadow-blue-500/20'
+                        : 'border-gray-700 hover:border-blue-400'
+                    }`}
+                  >
+                    <div className={`${getAspectRatio(currentProject.type)} bg-gray-800`}>
+                      <img
+                        src={screenshot.url}
+                        alt={screenshot.caption}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Mobile Thumbnails Indicator */}
+            <div className="lg:hidden w-full mt-4">
+              <div className="flex items-center justify-center gap-2">
+                {currentProject.screenshots.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => {
+                      setCurrentImage(currentProject.screenshots[idx].url);
+                      setCurrentImageIndex(idx);
+                    }}
+                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                      currentImageIndex === idx
+                        ? 'w-8 bg-blue-500'
+                        : 'bg-gray-600 hover:bg-gray-400'
+                    }`}
+                    aria-label={`Go to image ${idx + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Animated Cursor Follower */}
       <div
@@ -382,7 +656,9 @@ Best regards,
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div
-              className={`text-2xl font-bold text-blue-400 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"}`}
+              className={`text-2xl font-bold text-blue-400 transition-all duration-700 ${
+                isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+              }`}
             >
               {"Lungani Xulu"}
             </div>
@@ -394,13 +670,15 @@ Best regards,
                   <button
                     key={item}
                     onClick={() => scrollToSection(item.toLowerCase())}
-                    className={`text-sm font-medium transition-all duration-300 hover:text-blue-400 relative group ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"}`}
+                    className={`text-sm font-medium transition-all duration-300 hover:text-blue-400 relative group ${
+                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                    }`}
                     style={{ transitionDelay: `${idx * 100}ms` }}
                   >
                     {item}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
                   </button>
-                ),
+                )
               )}
             </div>
 
@@ -416,17 +694,15 @@ Best regards,
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden mt-4 pb-4 space-y-2">
-              {["Home", "About", "Skills", "Projects", "Contact"].map(
-                (item) => (
-                  <button
-                    key={item}
-                    onClick={() => scrollToSection(item.toLowerCase())}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-800 rounded-lg transition-colors"
-                  >
-                    {item}
-                  </button>
-                ),
-              )}
+              {["Home", "About", "Skills", "Projects", "Contact"].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => scrollToSection(item.toLowerCase())}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-800 rounded-lg transition-colors"
+                >
+                  {item}
+                </button>
+              ))}
             </div>
           )}
         </div>
@@ -441,7 +717,9 @@ Best regards,
           <div className="grid md:grid-cols-2 gap-12 items-center">
             {/* Left Side - Text Content */}
             <div
-              className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+              className={`transition-all duration-1000 ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+              }`}
             >
               <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-blue-900/30 border border-blue-700/50 rounded-full text-blue-400 text-sm font-medium">
                 <Sparkles size={16} />
@@ -453,8 +731,8 @@ Best regards,
                 <span className="text-blue-400">Developer</span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-400 mb-8 max-w-xl font-light leading-relaxed">
-                I build responsive, interactive web applications with React
-                and Tailwind CSS. Creating clean, modern interfaces that work
+                I build responsive, interactive web applications with React and
+                Tailwind CSS. Creating clean, modern interfaces that work
                 seamlessly across devices.
               </p>
               <div className="flex flex-wrap gap-4 mb-12">
@@ -503,7 +781,9 @@ Best regards,
 
             {/* Right Side - Profile Image */}
             <div
-              className={`transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}
+              className={`transition-all duration-1000 delay-300 ${
+                isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+              }`}
             >
               <div className="relative">
                 {/* Main Image Container */}
@@ -552,22 +832,18 @@ Best regards,
             </div>
 
             <div className="order-1 md:order-2">
-              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-gray-100">
-                About Me
-              </h2>
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-gray-100">About Me</h2>
               <div className="space-y-4 text-gray-300 text-lg leading-relaxed">
                 <p>
-                  I'm a passionate frontend developer with a keen eye for detail
-                  and a love for creating beautiful, intuitive user interfaces.
-                  I specialize in React and modern CSS frameworks, bringing
-                  designs to life with pixel-perfect precision.
+                  I'm a passionate frontend developer with a keen eye for detail and a love for
+                  creating beautiful, intuitive user interfaces. I specialize in React and modern
+                  CSS frameworks, bringing designs to life with pixel-perfect precision.
                 </p>
                 <p>
-                  With a strong foundation in HTML, CSS, and JavaScript, I excel
-                  at building responsive, accessible web applications that
-                  provide exceptional user experiences across all devices. I'm
-                  always exploring new technologies and design trends to stay at
-                  the forefront of frontend development.
+                  With a strong foundation in HTML, CSS, and JavaScript, I excel at building
+                  responsive, accessible web applications that provide exceptional user experiences
+                  across all devices. I'm always exploring new technologies and design trends to
+                  stay at the forefront of frontend development.
                 </p>
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -594,9 +870,7 @@ Best regards,
       <section id="skills" className="relative py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">
-              Tech Stack
-            </h2>
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">Tech Stack</h2>
             <p className="text-gray-400 text-lg">
               Technologies I use to craft beautiful user interfaces
             </p>
@@ -615,12 +889,8 @@ Best regards,
                 {skills.core.map((skill) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-300 font-medium">
-                        {skill.name}
-                      </span>
-                      <span className="text-blue-400 font-semibold">
-                        {skill.level}%
-                      </span>
+                      <span className="text-gray-300 font-medium">{skill.name}</span>
+                      <span className="text-blue-400 font-semibold">{skill.level}%</span>
                     </div>
                     <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                       <div
@@ -639,20 +909,14 @@ Best regards,
                 <div className="p-3 bg-indigo-900/30 rounded-xl">
                   <Palette size={24} className="text-indigo-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-100">
-                  Styling & UI
-                </h3>
+                <h3 className="text-2xl font-bold text-gray-100">Styling & UI</h3>
               </div>
               <div className="space-y-4">
                 {skills.styling.map((skill) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-300 font-medium">
-                        {skill.name}
-                      </span>
-                      <span className="text-indigo-400 font-semibold">
-                        {skill.level}%
-                      </span>
+                      <span className="text-gray-300 font-medium">{skill.name}</span>
+                      <span className="text-indigo-400 font-semibold">{skill.level}%</span>
                     </div>
                     <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                       <div
@@ -671,20 +935,14 @@ Best regards,
                 <div className="p-3 bg-purple-900/30 rounded-xl">
                   <Layout size={24} className="text-purple-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-100">
-                  Tools & Workflow
-                </h3>
+                <h3 className="text-2xl font-bold text-gray-100">Tools & Workflow</h3>
               </div>
               <div className="space-y-4">
                 {skills.tools.map((skill) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-300 font-medium">
-                        {skill.name}
-                      </span>
-                      <span className="text-purple-400 font-semibold">
-                        {skill.level}%
-                      </span>
+                      <span className="text-gray-300 font-medium">{skill.name}</span>
+                      <span className="text-purple-400 font-semibold">{skill.level}%</span>
                     </div>
                     <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
                       <div
@@ -704,12 +962,8 @@ Best regards,
       <section id="projects" className="relative py-32 px-6 bg-gray-800/30">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">
-              Featured Projects
-            </h2>
-            <p className="text-gray-400 text-lg">
-              A showcase of my best frontend work
-            </p>
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">Featured Projects</h2>
+            <p className="text-gray-400 text-lg">A showcase of my best frontend work</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -737,31 +991,35 @@ Best regards,
                           <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">
                             {project.title}
                           </h3>
-                          <p className="text-white/90 text-sm drop-shadow-md">
-                            {project.category}
-                          </p>
+                          <p className="text-white/90 text-sm drop-shadow-md">{project.category}</p>
                         </div>
                       </div>
                     </div>
                   ) : (
-                    <div 
+                    <div
                       className="absolute inset-0 flex items-center justify-center"
                       style={{ background: project.gradient }}
                     >
-                      {project.title === "U-Access" ? (
-                        <Smartphone size={64} className="text-white/80 group-hover:scale-110 transition-transform duration-300" />
+                      {project.type === "mobile" ? (
+                        <Smartphone
+                          size={64}
+                          className="text-white/80 group-hover:scale-110 transition-transform duration-300"
+                        />
                       ) : (
-                        <Globe size={64} className="text-white/80 group-hover:scale-110 transition-transform duration-300" />
+                        <Globe
+                          size={64}
+                          className="text-white/80 group-hover:scale-110 transition-transform duration-300"
+                        />
                       )}
                     </div>
                   )}
                   {/* Expand/Collapse Indicator */}
                   <div className="absolute bottom-4 right-4 bg-black/50 rounded-full p-2 transition-transform duration-300 group-hover:scale-110">
-                    <ChevronDown 
-                      size={20} 
+                    <ChevronDown
+                      size={20}
                       className={`text-white transition-transform duration-300 ${
                         expandedProject === idx ? "rotate-180" : ""
-                      }`} 
+                      }`}
                     />
                   </div>
                 </div>
@@ -770,14 +1028,10 @@ Best regards,
                   <h3 className="text-2xl font-bold mb-3 text-gray-100 group-hover:text-blue-400 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-gray-400 mb-4 leading-relaxed">
-                    {project.description}
-                  </p>
+                  <p className="text-gray-400 mb-4 leading-relaxed">{project.description}</p>
 
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-gray-500 mb-2">
-                      Tech Stack:
-                    </h4>
+                    <h4 className="text-sm font-semibold text-gray-500 mb-2">Tech Stack:</h4>
                     <div className="flex flex-wrap gap-2">
                       {project.tech.map((tech) => (
                         <span
@@ -791,15 +1045,10 @@ Best regards,
                   </div>
 
                   <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-gray-500 mb-2">
-                      Key Features:
-                    </h4>
+                    <h4 className="text-sm font-semibold text-gray-500 mb-2">Key Features:</h4>
                     <ul className="grid grid-cols-2 gap-2">
                       {project.features.map((feature) => (
-                        <li
-                          key={feature}
-                          className="text-sm text-gray-400 flex items-center gap-2"
-                        >
+                        <li key={feature} className="text-sm text-gray-400 flex items-center gap-2">
                           <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
                           {feature}
                         </li>
@@ -811,40 +1060,64 @@ Best regards,
                   {expandedProject === idx && (
                     <div className="mt-6 pt-6 border-t-2 border-gray-700 animate-fadeIn">
                       <h4 className="text-lg font-semibold text-gray-100 mb-4">
-                        App Screenshots
+                        {project.type === "mobile" ? "App Screenshots" : "Website Screenshots"}
                       </h4>
-                      
-                      {/* Screenshots Grid */}
+
+                      {/* Screenshots Grid with Modal Trigger */}
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
                         {project.screenshots.map((screenshot, screenshotIdx) => (
                           <div
                             key={screenshotIdx}
-                            className="group/screenshot relative rounded-lg overflow-hidden border-2 border-gray-700 hover:border-blue-500 transition-all duration-300"
+                            className="group/screenshot relative rounded-lg overflow-hidden border-2 border-gray-700 hover:border-blue-500 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/10"
+                            onClick={() => openModal(project, screenshot.url, screenshotIdx)}
                           >
-                            <div className="aspect-[9/16] bg-gray-900">
+                            <div className={`${getAspectRatio(project.type)} bg-gray-900`}>
                               <img
                                 src={screenshot.url}
                                 alt={screenshot.caption}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover/screenshot:scale-110"
+                                className="w-full h-full object-contain transition-transform duration-500 group-hover/screenshot:scale-110"
                                 onError={(e) => {
                                   e.target.onerror = null;
-                                  e.target.src = `https://via.placeholder.com/300x600/${project.color === 'bg-teal-600' ? '008080' : project.color === 'bg-purple-600' ? '6a0dad' : '333333'}/ffffff?text=${project.title}+${screenshot.caption.replace(' ', '+')}`;
+                                  e.target.src = `https://via.placeholder.com/${
+                                    project.type === "mobile" ? "300x600" : "600x338"
+                                  }/${
+                                    project.color === "bg-teal-600"
+                                      ? "008080"
+                                      : project.color === "bg-purple-600"
+                                      ? "6a0dad"
+                                      : "333333"
+                                  }/ffffff?text=${project.title}+${screenshot.caption.replace(
+                                    " ",
+                                    "+"
+                                  )}`;
                                 }}
                               />
                             </div>
-                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-3 translate-y-full group-hover/screenshot:translate-y-0 transition-transform duration-300">
-                              <p className="text-white text-xs font-medium truncate">
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover/screenshot:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3">
+                              <p className="text-white text-xs font-medium truncate flex-1">
                                 {screenshot.caption}
                               </p>
+                              <div className="bg-blue-600 rounded-full p-1.5 transform translate-y-2 group-hover/screenshot:translate-y-0 transition-transform duration-300">
+                                <ExternalLink size={12} className="text-white" />
+                              </div>
+                            </div>
+                            
+                            {/* Hover overlay with zoom effect */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/screenshot:opacity-100 transition-all duration-300 flex items-center justify-center">
+                              <div className="bg-blue-600/90 rounded-full p-3 transform scale-0 group-hover/screenshot:scale-100 transition-transform duration-300">
+                                <ExternalLink size={20} className="text-white" />
+                              </div>
                             </div>
                           </div>
                         ))}
                       </div>
 
-                      {/* GitHub Button Only */}
+                      {/* GitHub Button */}
                       <div className="flex gap-4 mt-4">
                         <a
                           href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-700 hover:bg-purple-600 text-white rounded-xl font-medium transition-all duration-300 group/btn border border-gray-600 hover:border-purple-400"
                         >
                           <Github size={18} />
@@ -863,6 +1136,8 @@ Best regards,
                     <div className="flex gap-4">
                       <a
                         href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-700 hover:bg-purple-600 text-white rounded-xl font-medium transition-all duration-300 group/btn border border-gray-600 hover:border-purple-400"
                       >
                         <Github size={18} />
@@ -885,12 +1160,8 @@ Best regards,
       <section id="contact" className="relative py-32 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">
-              Let's Work Together
-            </h2>
-            <p className="text-gray-400 text-lg">
-              Have a project in mind? I'd love to hear from you
-            </p>
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">Let's Work Together</h2>
+            <p className="text-gray-400 text-lg">Have a project in mind? I'd love to hear from you</p>
           </div>
 
           <div className="bg-gray-800/50 border-2 border-gray-700 rounded-3xl p-8 md:p-12 shadow-xl">
@@ -933,9 +1204,7 @@ Best regards,
                         Click to open with pre-filled template
                       </span>
                     </a>
-                    <p className="text-gray-500 text-sm mt-4">
-                      I typically respond within 24 hours
-                    </p>
+                    <p className="text-gray-500 text-sm mt-4">I typically respond within 24 hours</p>
                   </div>
                 </div>
               </div>

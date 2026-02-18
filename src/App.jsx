@@ -19,7 +19,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import resumePDF from "./assets/Lungani Xulu CV_02-02-2026.pdf";
+import resumePDF from "./assets/Lungani Xulu CV_18-02-2026.pdf";
 import lungaImage from "./assets/me.jpg";
 import lungaImage2 from "./assets/me_coding.png";
 
@@ -751,7 +751,7 @@ Best regards,
                   onClick={() => {
                     const link = document.createElement("a");
                     link.href = resumePDF;
-                    link.download = "Lungani Xulu CV_02-02-2026.pdf";
+                    link.download = "Lungani Xulu CV_18-02-2026.pdf";
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);

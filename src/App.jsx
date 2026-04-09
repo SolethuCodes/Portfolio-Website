@@ -5,7 +5,6 @@ import {
   Mail,
   ExternalLink,
   Code2,
-  Palette,
   ChevronDown,
   Menu,
   X,
@@ -128,12 +127,12 @@ function App() {
 
     // Pre-populated email content
     const email = "lunganisolethu@gmail.com";
-    const subject = "Frontend Developer Opportunity - Lungani Xulu Portfolio";
-    const body = `Dear Lungani,
+  const subject = "Full-Stack Developer Opportunity - Lungani Xulu Portfolio";
+  const body = `Dear Lungani,
 
-I came across your portfolio and was impressed with your frontend development skills. 
+I came across your portfolio and was impressed with your full-stack development skills. 
 
-I'm reaching out regarding [mention the opportunity - job position, freelance project, collaboration, etc.].
+I'm reaching out regarding [mention the opportunity - job position, freelance project, collaboration, etc.] and would love to learn more about your experience with .NET and MySQL.
 
 Best regards,
 [Your Name]
@@ -177,7 +176,7 @@ Best regards,
     {
       title: "RoadGuard",
       category: "Mobile Development",
-      gradient: "linear-gradient(135deg, #6a0dad 0%, #5a0c9a 100%)",
+      gradient: "linear-gradient(135deg, #0b1f3a 0%, #1d4ed8 100%)",
       projectImage: "/RoadGuardPictures/Splash.jpeg",
       description:
         "Developed a mobile app to report and track road hazards in real time. Designed an intuitive interface for Android and iOS users.",
@@ -224,13 +223,13 @@ Best regards,
         },
       ],
       github: "https://github.com/SolethuCodes/RoadGuard",
-      color: "bg-purple-600",
+      color: "bg-blue-800",
       type: "mobile",
     },
     {
       title: "CampusBites",
       category: "Web Development",
-      gradient: "linear-gradient(135deg, #008080 0%, #6a0dad 100%)",
+      gradient: "linear-gradient(135deg, #0b1f3a 0%, #2563eb 100%)",
       projectImage: "/CampusBitesPictures/Logo.png",
       description:
         "Built a responsive web app for students to browse meals, view restaurant specials, and place orders. Designed intuitive UI components to enhance usability across devices.",
@@ -268,13 +267,13 @@ Best regards,
         },
       ],
       github: "https://github.com/SolethuCodes/CampusBites",
-      color: "bg-gradient-to-r from-teal-600 to-purple-600",
+      color: "bg-gradient-to-r from-blue-900 to-blue-600",
       type: "web",
     },
     {
       title: "Forever",
       category: "E-commerce Platform",
-      gradient: "linear-gradient(135deg, #111111 0%, #444444 100%)",
+      gradient: "linear-gradient(135deg, #0b1f3a 0%, #0f172a 100%)",
       projectImage: "/ForeverPictures/Logo.png",
       description:
         "A modern e-commerce platform focused on clean design, smooth shopping experience, and performance. Built to showcase products with intuitive navigation and secure checkout.",
@@ -313,28 +312,31 @@ Best regards,
         },
       ],
       github: "https://github.com/SolethuCodes/E-Commerce-MERN-",
-      color: "bg-gray-800",
+      color: "bg-blue-900",
       type: "web",
     },
   ];
 
   const skills = {
-    core: [
+    frontend: [
       { name: "React.js", level: 90 },
       { name: "JavaScript (ES6+)", level: 95 },
       { name: "HTML5", level: 95 },
       { name: "CSS3/SCSS", level: 90 },
-      { name: "TypeScript", level: 30 },
+      { name: "TypeScript", level: 55 },
     ],
-    styling: [
-      { name: "Tailwind CSS", level: 50 },
-      { name: "Responsive Design", level: 95 },
+    backend: [
+      { name: ".NET (C#)", level: 70 },
+      { name: "ASP.NET Core Web API", level: 65 },
+      { name: "Entity Framework Core", level: 60 },
+      { name: "MySQL", level: 65 },
+      { name: "RESTful APIs", level: 70 },
     ],
     tools: [
       { name: "Git/GitHub", level: 85 },
-      { name: "Figma", level: 60 },
+      { name: "Postman/Swagger", level: 70 },
       { name: "Webpack/Vite", level: 80 },
-      { name: "Chrome DevTools", level: 70 },
+      { name: "Figma", level: 60 },
     ],
   };
 
@@ -344,9 +346,11 @@ Best regards,
   };
 
   return (
-    <div className="bg-gray-900 text-gray-100 min-h-screen">
+    <div className="theme-light bg-white text-slate-900 min-h-screen">
       {/* Custom CSS for animations */}
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-20px); }
@@ -458,12 +462,12 @@ Best regards,
           transform: rotate(180deg);
         }
         
-        .bg-teal-600 {
-          background-color: #008080;
+        .bg-blue-800 {
+          background-color: #1e3a8a;
         }
         
-        .bg-gradient-to-r.from-teal-600.to-purple-600 {
-          background: linear-gradient(135deg, #008080 0%, #6a0dad 100%);
+        .bg-gradient-to-r.from-blue-900.to-blue-600 {
+          background: linear-gradient(135deg, #0b1f3a 0%, #2563eb 100%);
         }
 
         /* Custom scrollbar for modal */
@@ -487,16 +491,126 @@ Best regards,
 
         /* Glass morphism effect */
         .glass-effect {
-          background: rgba(17, 24, 39, 0.8);
+          background: rgba(255, 255, 255, 0.75);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          border: 1px solid rgba(75, 85, 99, 0.3);
+          border: 1px solid rgba(148, 163, 184, 0.4);
         }
 
         .glass-effect-dark {
-          background: rgba(0, 0, 0, 0.9);
+          background: rgba(15, 23, 42, 0.9);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
+        }
+
+        /* Typography */
+        .theme-light {
+          font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+        .theme-light h1,
+        .theme-light h2,
+        .theme-light h3,
+        .theme-light h4 {
+          font-family: "Playfair Display", "Times New Roman", serif;
+          letter-spacing: -0.02em;
+        }
+        .theme-light p,
+        .theme-light span,
+        .theme-light a,
+        .theme-light button {
+          font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+        }
+
+        /* Light theme overrides */
+        .theme-light .bg-gray-900 {
+          background-color: #ffffff;
+        }
+        .theme-light .bg-gray-900\/50 {
+          background-color: rgba(255, 255, 255, 0.85);
+        }
+        .theme-light .bg-gray-800 {
+          background-color: #ffffff;
+        }
+        .theme-light .bg-gray-800\/50 {
+          background-color: #ffffff;
+        }
+        .theme-light .bg-gray-800\/30 {
+          background-color: #ffffff;
+        }
+        .theme-light .bg-gray-800\/80 {
+          background-color: #ffffff;
+        }
+        .theme-light .bg-gray-900\/90 {
+          background-color: #ffffff;
+        }
+        .theme-light .bg-gray-700 {
+          background-color: #ffffff;
+        }
+        .theme-light .bg-gray-700\/50 {
+          background-color: #ffffff;
+        }
+        .theme-light .text-gray-100 {
+          color: #0f172a;
+        }
+        .theme-light .text-gray-300 {
+          color: #334155;
+        }
+        .theme-light .text-gray-400 {
+          color: #475569;
+        }
+        .theme-light .text-gray-500 {
+          color: #64748b;
+        }
+        .theme-light .border-gray-700 {
+          border-color: #bfdbfe;
+        }
+        .theme-light .border-gray-800 {
+          border-color: #bfdbfe;
+        }
+        .theme-light .border-gray-600 {
+          border-color: #bfdbfe;
+        }
+        .theme-light .text-blue-400 {
+          color: #1e3a8a;
+        }
+        .theme-light .text-blue-300 {
+          color: #1d4ed8;
+        }
+        .theme-light .bg-blue-600 {
+          background-color: #1e3a8a;
+        }
+        .theme-light .bg-blue-700 {
+          background-color: #1e40af;
+        }
+        .theme-light .border-blue-500 {
+          border-color: #1e3a8a;
+        }
+        .theme-light .border-blue-700\/50 {
+          border-color: rgba(30, 64, 175, 0.5);
+        }
+        .theme-light .bg-blue-900\/30 {
+          background-color: rgba(11, 31, 58, 0.12);
+        }
+        .theme-light .bg-indigo-900\/30 {
+          background-color: rgba(30, 64, 175, 0.12);
+        }
+        .theme-light .bg-purple-900\/30 {
+          background-color: rgba(37, 99, 235, 0.12);
+        }
+        .theme-light .text-indigo-400 {
+          color: #1d4ed8;
+        }
+        .theme-light .text-purple-400 {
+          color: #1e3a8a;
+        }
+        .theme-light .bg-indigo-500 {
+          background-color: #2563eb;
+        }
+        .theme-light .bg-purple-500 {
+          background-color: #1e3a8a;
+        }
+        .theme-light .bg-purple-600 {
+          background-color: #1e3a8a;
         }
       `}</style>
 
@@ -504,7 +618,7 @@ Best regards,
       {modalOpen && currentProject && (
         <div 
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-modal-bg"
-          style={{ backgroundColor: 'rgba(0, 0, 0, 0.95)' }}
+          style={{ backgroundColor: 'rgba(255, 255, 255, 0.96)' }}
           onClick={closeModal}
         >
           {/* Modal Content */}
@@ -515,16 +629,16 @@ Best regards,
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 z-50 p-3 bg-gray-800/80 hover:bg-gray-700 rounded-full transition-all duration-300 hover:scale-110 glass-effect group"
+              className="absolute top-4 right-4 z-50 p-3 bg-white/90 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 glass-effect group border border-slate-200"
               aria-label="Close modal"
             >
-              <X size={24} className="text-gray-300 group-hover:text-white transition-colors" />
+              <X size={24} className="text-slate-600 group-hover:text-blue-700 transition-colors" />
             </button>
 
             {/* Image Counter */}
-            <div className="absolute top-4 left-4 z-50 px-4 py-2 bg-gray-800/80 rounded-full glass-effect">
-              <span className="text-sm text-gray-300">
-                <span className="text-blue-400 font-semibold">{currentImageIndex + 1}</span> / {currentProject.screenshots.length}
+            <div className="absolute top-4 left-4 z-50 px-4 py-2 bg-white/90 rounded-full glass-effect border border-slate-200">
+              <span className="text-sm text-slate-600">
+                <span className="text-blue-700 font-semibold">{currentImageIndex + 1}</span> / {currentProject.screenshots.length}
               </span>
             </div>
 
@@ -535,17 +649,17 @@ Best regards,
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-2 lg:-left-6 z-40 p-3 bg-gray-800/80 hover:bg-gray-700 rounded-full transition-all duration-300 hover:scale-110 glass-effect group"
+                    className="absolute left-2 lg:-left-6 z-40 p-3 bg-white/90 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 glass-effect group border border-slate-200"
                     aria-label="Previous image"
                   >
-                    <ChevronLeft size={24} className="text-gray-300 group-hover:text-white transition-colors" />
+                    <ChevronLeft size={24} className="text-slate-600 group-hover:text-blue-700 transition-colors" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-2 lg:-right-6 z-40 p-3 bg-gray-800/80 hover:bg-gray-700 rounded-full transition-all duration-300 hover:scale-110 glass-effect group"
+                    className="absolute right-2 lg:-right-6 z-40 p-3 bg-white/90 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 glass-effect group border border-slate-200"
                     aria-label="Next image"
                   >
-                    <ChevronRight size={24} className="text-gray-300 group-hover:text-white transition-colors" />
+                    <ChevronRight size={24} className="text-slate-600 group-hover:text-blue-700 transition-colors" />
                   </button>
                 </>
               )}
@@ -565,11 +679,11 @@ Best regards,
                   />
                   
                   {/* Image Caption */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-6">
-                    <p className="text-white text-lg font-medium">
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white/95 via-white/70 to-transparent p-6">
+                    <p className="text-slate-900 text-lg font-medium">
                       {currentProject.screenshots[currentImageIndex].caption}
                     </p>
-                    <p className="text-gray-300 text-sm mt-1">
+                    <p className="text-slate-600 text-sm mt-1">
                       {currentProject.title} - {currentProject.category}
                     </p>
                   </div>
@@ -580,7 +694,7 @@ Best regards,
             {/* Thumbnails Sidebar - Desktop */}
             <div className="hidden lg:block w-1/4 h-[80vh] overflow-y-auto pr-2 modal-scrollbar">
               <div className="space-y-3">
-                <h4 className="text-white font-semibold mb-4 text-lg sticky top-0 bg-gray-900/90 py-2 px-3 rounded-lg glass-effect">
+                <h4 className="text-slate-900 font-semibold mb-4 text-lg sticky top-0 bg-white/90 py-2 px-3 rounded-lg glass-effect border border-slate-200">
                   All Screenshots
                 </h4>
                 {currentProject.screenshots.map((screenshot, idx) => (
@@ -593,17 +707,17 @@ Best regards,
                     className={`group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-[1.02] ${
                       currentImageIndex === idx
                         ? 'border-blue-500 shadow-lg shadow-blue-500/20'
-                        : 'border-gray-700 hover:border-blue-400'
+                        : 'border-blue-200 hover:border-blue-400'
                     }`}
                   >
-                    <div className={`${getAspectRatio(currentProject.type)} bg-gray-800`}>
+                    <div className={`${getAspectRatio(currentProject.type)} bg-white`}>
                       <img
                         src={screenshot.url}
                         alt={screenshot.caption}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-white/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                 ))}
               </div>
@@ -622,7 +736,7 @@ Best regards,
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       currentImageIndex === idx
                         ? 'w-8 bg-blue-500'
-                        : 'bg-gray-600 hover:bg-gray-400'
+                        : 'bg-blue-200 hover:bg-blue-300'
                     }`}
                     aria-label={`Go to image ${idx + 1}`}
                   />
@@ -643,16 +757,10 @@ Best regards,
         }}
       ></div>
 
-      {/* Floating Elements Animation - Dark Theme Colors */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-blue-900/30 rounded-full animate-float"></div>
-        <div className="absolute top-40 right-20 w-16 h-16 bg-indigo-900/30 rounded-lg animate-float-delayed"></div>
-        <div className="absolute bottom-40 left-1/4 w-12 h-12 bg-purple-900/30 rounded-full animate-float"></div>
-        <div className="absolute bottom-20 right-1/3 w-24 h-24 bg-pink-900/30 rounded-lg animate-float-delayed"></div>
-      </div>
+      {/* Floating Elements Animation removed for pure white theme */}
 
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-900/80 backdrop-blur-xl border-b border-gray-800">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
             <div
@@ -685,7 +793,7 @@ Best regards,
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="md:hidden p-2 hover:bg-gray-800 rounded-lg transition-colors"
+              className="md:hidden p-2 hover:text-blue-700 rounded-lg transition-colors"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -698,7 +806,7 @@ Best regards,
                 <button
                   key={item}
                   onClick={() => scrollToSection(item.toLowerCase())}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-800 rounded-lg transition-colors"
+                  className="block w-full text-left px-4 py-2 hover:text-blue-700 rounded-lg transition-colors"
                 >
                   {item}
                 </button>
@@ -721,19 +829,19 @@ Best regards,
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
               }`}
             >
-              <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-blue-900/30 border border-blue-700/50 rounded-full text-blue-400 text-sm font-medium">
+              <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-white border border-blue-600 rounded-full text-blue-700 text-sm font-medium">
                 <Sparkles size={16} />
                 Available for new opportunities
               </div>
               <h1 className="text-6xl md:text-7xl font-bold mb-6 text-gray-100 leading-tight">
-                Frontend
+                Full-Stack
                 <br />
                 <span className="text-blue-400">Developer</span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-400 mb-8 max-w-xl font-light leading-relaxed">
-                I build responsive, interactive web applications with React and
-                Tailwind CSS. Creating clean, modern interfaces that work
-                seamlessly across devices.
+                I build end-to-end web products with React on the frontend and
+                .NET + MySQL on the backend. Clean UI, fast APIs, and reliable
+                data flows across devices.
               </p>
               <div className="flex flex-wrap gap-4 mb-12">
                 <button
@@ -747,7 +855,7 @@ Best regards,
                   />
                 </button>
                 <button
-                  className="px-8 py-4 border-2 border-gray-300 text-gray-300 hover:bg-gray-800 hover:border-gray-800 hover:text-white rounded-full font-medium transition-all duration-300 flex items-center gap-2"
+                  className="px-8 py-4 border-2 border-blue-700 text-blue-700 hover:bg-blue-700 hover:border-blue-700 hover:text-white rounded-full font-medium transition-all duration-300 flex items-center gap-2"
                   onClick={() => {
                     const link = document.createElement("a");
                     link.href = resumePDF;
@@ -767,7 +875,7 @@ Best regards,
                     key={social.label}
                     href={social.href}
                     onClick={social.onClick || undefined}
-                    className="p-3 bg-gray-800 hover:bg-blue-600 hover:text-white rounded-lg transition-all duration-300 hover:scale-110"
+                  className="p-3 bg-white border border-slate-200 text-blue-700 hover:bg-blue-700 hover:text-white rounded-lg transition-all duration-300 hover:scale-110"
                     style={{ animationDelay: `${idx * 100}ms` }}
                     aria-label={social.label}
                     target={social.isExternal ? "_blank" : "_self"}
@@ -789,17 +897,16 @@ Best regards,
                 {/* Main Image Container */}
                 <div className="relative aspect-square max-w-md mx-auto">
                   {/* Decorative Elements */}
-                  <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-900/30 rounded-full animate-pulse"></div>
-                  <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-indigo-900/30 rounded-full animate-pulse delay-1000"></div>
+                  {/* Decorative shapes removed for pure white theme */}
 
                   {/* Image Frame */}
-                  <div className="relative z-10 w-full h-full rounded-3xl overflow-hidden border-4 border-gray-800 shadow-2xl shadow-blue-500/10">
+                  <div className="relative z-10 w-full h-full rounded-3xl overflow-hidden border-4 border-blue-200 shadow-2xl shadow-blue-500/10">
                     <img
                       src={lungaImage}
-                      alt="Lungani Xulu - Frontend Developer"
+                      alt="Lungani Xulu - Full-Stack Developer"
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-blue-600/5"></div>
+                    <div className="absolute inset-0 bg-transparent"></div>
                   </div>
                 </div>
               </div>
@@ -814,48 +921,45 @@ Best regards,
       </section>
 
       {/* About Section */}
-      <section id="about" className="relative py-32 px-6 bg-gray-800/30">
+      <section id="about" className="relative py-32 px-6 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="relative order-2 md:order-1">
-              <div className="aspect-square bg-blue-900/20 rounded-3xl border-4 border-gray-800 shadow-xl overflow-hidden relative group">
+              <div className="aspect-square bg-white rounded-3xl border-4 border-blue-200 shadow-xl overflow-hidden relative group">
                 <img
                   src={lungaImage2}
                   alt="Lungani Xulu - About Me"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-blue-600/0 group-hover:bg-blue-600/10 transition-all duration-500"></div>
+                <div className="absolute inset-0 bg-transparent"></div>
               </div>
-              {/* Decorative floating elements */}
-              <div className="absolute -top-6 -right-6 w-24 h-24 bg-indigo-900/30 rounded-full animate-float"></div>
-              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-purple-900/30 rounded-lg animate-float-delayed"></div>
+              {/* Decorative floating elements removed for pure white theme */}
             </div>
 
             <div className="order-1 md:order-2">
               <h2 className="text-5xl md:text-6xl font-bold mb-6 text-gray-100">About Me</h2>
               <div className="space-y-4 text-gray-300 text-lg leading-relaxed">
                 <p>
-                  I'm a passionate frontend developer with a keen eye for detail and a love for
-                  creating beautiful, intuitive user interfaces. I specialize in React and modern
-                  CSS frameworks, bringing designs to life with pixel-perfect precision.
+                  I'm a full-stack developer with a keen eye for detail and a love for building
+                  products that feel great to use. I specialize in React on the frontend, while
+                  crafting clean APIs and data layers with .NET.
                 </p>
                 <p>
-                  With a strong foundation in HTML, CSS, and JavaScript, I excel at building
-                  responsive, accessible web applications that provide exceptional user experiences
-                  across all devices. I'm always exploring new technologies and design trends to
-                  stay at the forefront of frontend development.
+                  With a strong foundation in HTML, CSS, and JavaScript, I deliver responsive,
+                  accessible interfaces, and pair them with reliable backend services and MySQL
+                  databases. I enjoy shaping the whole journey from UI to data.
                 </p>
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
                 {[
-                  "UI/UX Focused",
+                  "Full-Stack Mindset",
+                  "API-First Builder",
+                  "Database Driven",
                   "Detail-Oriented",
-                  "Creative Problem Solver",
-                  "Fast Learner",
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="px-4 py-2 bg-blue-900/30 border border-blue-700/50 rounded-full text-sm text-blue-300 font-medium"
+                    className="px-4 py-2 bg-white border border-blue-600 rounded-full text-sm text-blue-700 font-medium"
                   >
                     {tag}
                   </span>
@@ -872,27 +976,27 @@ Best regards,
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">Tech Stack</h2>
             <p className="text-gray-400 text-lg">
-              Technologies I use to craft beautiful user interfaces
+              Technologies I use to build complete, production-ready systems
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Core Frontend Skills */}
-            <div className="group bg-gray-800/50 border-2 border-gray-700 rounded-3xl p-8 hover:border-blue-500 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10">
+            {/* Frontend Skills */}
+            <div className="group bg-white border-2 border-blue-200 rounded-3xl p-8 hover:border-blue-500 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-blue-900/30 rounded-xl">
+                <div className="p-3 bg-white border border-blue-200 rounded-xl">
                   <Code2 size={24} className="text-blue-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-100">Core</h3>
+                <h3 className="text-2xl font-bold text-gray-100">Frontend</h3>
               </div>
               <div className="space-y-4">
-                {skills.core.map((skill) => (
+                {skills.frontend.map((skill) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-300 font-medium">{skill.name}</span>
                       <span className="text-blue-400 font-semibold">{skill.level}%</span>
                     </div>
-                    <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-2 bg-blue-100 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-blue-500 rounded-full transition-all duration-1000 ease-out"
                         style={{ width: `${skill.level}%` }}
@@ -903,22 +1007,22 @@ Best regards,
               </div>
             </div>
 
-            {/* Styling & UI Skills */}
-            <div className="group bg-gray-800/50 border-2 border-gray-700 rounded-3xl p-8 hover:border-indigo-500 transition-all duration-300 hover:shadow-xl hover:shadow-indigo-500/10">
+            {/* Backend & Data Skills */}
+            <div className="group bg-white border-2 border-blue-200 rounded-3xl p-8 hover:border-blue-500 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-indigo-900/30 rounded-xl">
-                  <Palette size={24} className="text-indigo-400" />
+                <div className="p-3 bg-white border border-blue-200 rounded-xl">
+                  <Laptop size={24} className="text-indigo-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-100">Styling & UI</h3>
+                <h3 className="text-2xl font-bold text-gray-100">Backend & Data</h3>
               </div>
               <div className="space-y-4">
-                {skills.styling.map((skill) => (
+                {skills.backend.map((skill) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-300 font-medium">{skill.name}</span>
                       <span className="text-indigo-400 font-semibold">{skill.level}%</span>
                     </div>
-                    <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-2 bg-blue-100 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-indigo-500 rounded-full transition-all duration-1000 ease-out"
                         style={{ width: `${skill.level}%` }}
@@ -930,10 +1034,10 @@ Best regards,
             </div>
 
             {/* Tools & Workflow */}
-            <div className="group bg-gray-800/50 border-2 border-gray-700 rounded-3xl p-8 hover:border-purple-500 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/10">
+            <div className="group bg-white border-2 border-blue-200 rounded-3xl p-8 hover:border-blue-500 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-3 bg-purple-900/30 rounded-xl">
-                  <Layout size={24} className="text-purple-400" />
+                <div className="p-3 bg-white border border-blue-200 rounded-xl">
+                  <Layout size={24} className="text-blue-400" />
                 </div>
                 <h3 className="text-2xl font-bold text-gray-100">Tools & Workflow</h3>
               </div>
@@ -942,11 +1046,11 @@ Best regards,
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
                       <span className="text-gray-300 font-medium">{skill.name}</span>
-                      <span className="text-purple-400 font-semibold">{skill.level}%</span>
+                      <span className="text-blue-400 font-semibold">{skill.level}%</span>
                     </div>
-                    <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
+                    <div className="h-2 bg-blue-100 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-purple-500 rounded-full transition-all duration-1000 ease-out"
+                        className="h-full bg-blue-500 rounded-full transition-all duration-1000 ease-out"
                         style={{ width: `${skill.level}%` }}
                       ></div>
                     </div>
@@ -959,18 +1063,18 @@ Best regards,
       </section>
 
       {/* Projects Section - All 4 Projects with Expandable Feature */}
-      <section id="projects" className="relative py-32 px-6 bg-gray-800/30">
+      <section id="projects" className="relative py-32 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">Featured Projects</h2>
-            <p className="text-gray-400 text-lg">A showcase of my best frontend work</p>
+            <p className="text-gray-400 text-lg">A showcase of my product and full-stack work</p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
             {projects.map((project, idx) => (
               <div
                 key={project.title}
-                className={`group bg-gray-800/50 border-2 border-gray-700 rounded-3xl overflow-hidden hover:border-blue-500 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 ${
+                className={`group bg-white border-2 border-blue-200 rounded-3xl overflow-hidden hover:border-blue-500 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 ${
                   expandedProject === idx ? "transform-none" : "hover:-translate-y-1"
                 }`}
               >
@@ -1036,7 +1140,7 @@ Best regards,
                       {project.tech.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 bg-gray-700/50 text-gray-300 rounded-full text-xs font-medium border border-gray-600"
+                          className="px-3 py-1 bg-white text-blue-700 rounded-full text-xs font-medium border border-blue-200"
                         >
                           {tech}
                         </span>
@@ -1058,7 +1162,7 @@ Best regards,
 
                   {/* Expanded Project Details */}
                   {expandedProject === idx && (
-                    <div className="mt-6 pt-6 border-t-2 border-gray-700 animate-fadeIn">
+                    <div className="mt-6 pt-6 border-t-2 border-blue-200 animate-fadeIn">
                       <h4 className="text-lg font-semibold text-gray-100 mb-4">
                         {project.type === "mobile" ? "App Screenshots" : "Website Screenshots"}
                       </h4>
@@ -1068,10 +1172,10 @@ Best regards,
                         {project.screenshots.map((screenshot, screenshotIdx) => (
                           <div
                             key={screenshotIdx}
-                            className="group/screenshot relative rounded-lg overflow-hidden border-2 border-gray-700 hover:border-blue-500 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/10"
+                            className="group/screenshot relative rounded-lg overflow-hidden border-2 border-blue-200 hover:border-blue-500 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/10"
                             onClick={() => openModal(project, screenshot.url, screenshotIdx)}
                           >
-                            <div className={`${getAspectRatio(project.type)} bg-gray-900`}>
+                            <div className={`${getAspectRatio(project.type)} bg-white`}>
                               <img
                                 src={screenshot.url}
                                 alt={screenshot.caption}
@@ -1081,11 +1185,11 @@ Best regards,
                                   e.target.src = `https://via.placeholder.com/${
                                     project.type === "mobile" ? "300x600" : "600x338"
                                   }/${
-                                    project.color === "bg-teal-600"
-                                      ? "008080"
-                                      : project.color === "bg-purple-600"
-                                      ? "6a0dad"
-                                      : "333333"
+                                    project.color === "bg-blue-800"
+                                      ? "1e3a8a"
+                                      : project.color === "bg-gradient-to-r from-blue-900 to-blue-600"
+                                      ? "1e40af"
+                                      : "0f172a"
                                   }/ffffff?text=${project.title}+${screenshot.caption.replace(
                                     " ",
                                     "+"
@@ -1118,7 +1222,7 @@ Best regards,
                           href={project.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-700 hover:bg-purple-600 text-white rounded-xl font-medium transition-all duration-300 group/btn border border-gray-600 hover:border-purple-400"
+                          className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-medium transition-all duration-300 group/btn border border-blue-700 hover:border-blue-800"
                         >
                           <Github size={18} />
                           View Code
@@ -1138,7 +1242,7 @@ Best regards,
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-gray-700 hover:bg-purple-600 text-white rounded-xl font-medium transition-all duration-300 group/btn border border-gray-600 hover:border-purple-400"
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-3 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-medium transition-all duration-300 group/btn border border-blue-700 hover:border-blue-800"
                       >
                         <Github size={18} />
                         View Code
@@ -1164,7 +1268,7 @@ Best regards,
             <p className="text-gray-400 text-lg">Have a project in mind? I'd love to hear from you</p>
           </div>
 
-          <div className="bg-gray-800/50 border-2 border-gray-700 rounded-3xl p-8 md:p-12 shadow-xl">
+          <div className="bg-white border-2 border-blue-200 rounded-3xl p-8 md:p-12 shadow-xl">
             <div className="space-y-8 text-center">
               <div className="mb-8">
                 <p className="text-gray-300 text-lg mb-6">
@@ -1176,7 +1280,7 @@ Best regards,
                       key={social.label}
                       href={social.href}
                       onClick={social.onClick || undefined}
-                      className="p-4 bg-gray-700 hover:bg-blue-600 hover:text-white rounded-xl transition-all duration-300 hover:scale-110 flex flex-col items-center gap-2 group"
+                      className="p-4 bg-white border border-slate-200 text-blue-700 hover:bg-blue-700 hover:text-white rounded-xl transition-all duration-300 hover:scale-110 flex flex-col items-center gap-2 group"
                       aria-label={social.label}
                       target={social.isExternal ? "_blank" : "_self"}
                       rel={social.isExternal ? "noopener noreferrer" : ""}
@@ -1190,7 +1294,7 @@ Best regards,
                 </div>
               </div>
 
-              <div className="pt-8 border-t-2 border-gray-700">
+              <div className="pt-8 border-t-2 border-blue-200">
                 <div className="flex flex-col items-center gap-6">
                   <div className="text-center">
                     <p className="text-gray-400 mb-2">Email me directly</p>
@@ -1214,7 +1318,7 @@ Best regards,
       </section>
 
       {/* Footer */}
-      <footer className="relative py-12 px-6 border-t-2 border-gray-800 bg-gray-900/50">
+      <footer className="relative py-12 px-6 border-t-2 border-blue-200 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
             <p className="text-gray-400 mb-4">

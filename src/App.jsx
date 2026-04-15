@@ -18,7 +18,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import resumePDF from "./assets/Lungani Xulu CV_18-02-2026.pdf";
+import resumePDF from "./assets/Lungani_Xulu_ATS_09-04-2026.pdf";
 import lungaImage from "./assets/me.jpg";
 import lungaImage2 from "./assets/me_coding.png";
 
@@ -28,7 +28,7 @@ function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [expandedProject, setExpandedProject] = useState(null);
-  
+
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
@@ -49,12 +49,12 @@ function App() {
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (modalOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = "unset";
     };
   }, [modalOpen]);
 
@@ -88,7 +88,8 @@ function App() {
   const nextImage = (e) => {
     e.stopPropagation();
     if (currentProject) {
-      const nextIndex = (currentImageIndex + 1) % currentProject.screenshots.length;
+      const nextIndex =
+        (currentImageIndex + 1) % currentProject.screenshots.length;
       setCurrentImage(currentProject.screenshots[nextIndex].url);
       setCurrentImageIndex(nextIndex);
     }
@@ -97,7 +98,9 @@ function App() {
   const prevImage = (e) => {
     e.stopPropagation();
     if (currentProject) {
-      const prevIndex = (currentImageIndex - 1 + currentProject.screenshots.length) % currentProject.screenshots.length;
+      const prevIndex =
+        (currentImageIndex - 1 + currentProject.screenshots.length) %
+        currentProject.screenshots.length;
       setCurrentImage(currentProject.screenshots[prevIndex].url);
       setCurrentImageIndex(prevIndex);
     }
@@ -107,18 +110,18 @@ function App() {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (!modalOpen) return;
-      
-      if (e.key === 'Escape') {
+
+      if (e.key === "Escape") {
         closeModal();
-      } else if (e.key === 'ArrowRight') {
+      } else if (e.key === "ArrowRight") {
         nextImage(e);
-      } else if (e.key === 'ArrowLeft') {
+      } else if (e.key === "ArrowLeft") {
         prevImage(e);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [modalOpen, currentImageIndex, currentProject]);
 
   // Enhanced email handler with pre-populated content
@@ -127,8 +130,8 @@ function App() {
 
     // Pre-populated email content
     const email = "lunganisolethu@gmail.com";
-  const subject = "Full-Stack Developer Opportunity - Lungani Xulu Portfolio";
-  const body = `Dear Lungani,
+    const subject = "Full-Stack Developer Opportunity - Lungani Xulu Portfolio";
+    const body = `Dear Lungani,
 
 I came across your portfolio and was impressed with your full-stack development skills. 
 
@@ -616,13 +619,13 @@ Best regards,
 
       {/* Image Modal */}
       {modalOpen && currentProject && (
-        <div 
+        <div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 animate-modal-bg"
-          style={{ backgroundColor: 'rgba(255, 255, 255, 0.96)' }}
+          style={{ backgroundColor: "rgba(255, 255, 255, 0.96)" }}
           onClick={closeModal}
         >
           {/* Modal Content */}
-          <div 
+          <div
             className="relative max-w-7xl w-full h-[90vh] flex flex-col lg:flex-row items-center justify-center gap-6 animate-modal-in"
             onClick={(e) => e.stopPropagation()}
           >
@@ -632,13 +635,19 @@ Best regards,
               className="absolute top-4 right-4 z-50 p-3 bg-white/90 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 glass-effect group border border-slate-200"
               aria-label="Close modal"
             >
-              <X size={24} className="text-slate-600 group-hover:text-blue-700 transition-colors" />
+              <X
+                size={24}
+                className="text-slate-600 group-hover:text-blue-700 transition-colors"
+              />
             </button>
 
             {/* Image Counter */}
             <div className="absolute top-4 left-4 z-50 px-4 py-2 bg-white/90 rounded-full glass-effect border border-slate-200">
               <span className="text-sm text-slate-600">
-                <span className="text-blue-700 font-semibold">{currentImageIndex + 1}</span> / {currentProject.screenshots.length}
+                <span className="text-blue-700 font-semibold">
+                  {currentImageIndex + 1}
+                </span>{" "}
+                / {currentProject.screenshots.length}
               </span>
             </div>
 
@@ -652,24 +661,30 @@ Best regards,
                     className="absolute left-2 lg:-left-6 z-40 p-3 bg-white/90 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 glass-effect group border border-slate-200"
                     aria-label="Previous image"
                   >
-                    <ChevronLeft size={24} className="text-slate-600 group-hover:text-blue-700 transition-colors" />
+                    <ChevronLeft
+                      size={24}
+                      className="text-slate-600 group-hover:text-blue-700 transition-colors"
+                    />
                   </button>
                   <button
                     onClick={nextImage}
                     className="absolute right-2 lg:-right-6 z-40 p-3 bg-white/90 hover:bg-blue-50 rounded-full transition-all duration-300 hover:scale-110 glass-effect group border border-slate-200"
                     aria-label="Next image"
                   >
-                    <ChevronRight size={24} className="text-slate-600 group-hover:text-blue-700 transition-colors" />
+                    <ChevronRight
+                      size={24}
+                      className="text-slate-600 group-hover:text-blue-700 transition-colors"
+                    />
                   </button>
                 </>
               )}
 
               {/* Image Container */}
               <div className="relative w-full h-full flex items-center justify-center p-4">
-                <div 
+                <div
                   className="relative max-w-full max-h-full rounded-xl overflow-hidden shadow-2xl"
                   style={{
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
+                    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
                   }}
                 >
                   <img
@@ -677,7 +692,7 @@ Best regards,
                     alt={currentProject.screenshots[currentImageIndex].caption}
                     className="max-w-full max-h-[50vh] lg:max-h-[70vh] w-auto h-auto object-contain rounded-xl"
                   />
-                  
+
                   {/* Image Caption */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white/95 via-white/70 to-transparent p-6">
                     <p className="text-slate-900 text-lg font-medium">
@@ -706,11 +721,13 @@ Best regards,
                     }}
                     className={`group cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-[1.02] ${
                       currentImageIndex === idx
-                        ? 'border-blue-500 shadow-lg shadow-blue-500/20'
-                        : 'border-blue-200 hover:border-blue-400'
+                        ? "border-blue-500 shadow-lg shadow-blue-500/20"
+                        : "border-blue-200 hover:border-blue-400"
                     }`}
                   >
-                    <div className={`${getAspectRatio(currentProject.type)} bg-white`}>
+                    <div
+                      className={`${getAspectRatio(currentProject.type)} bg-white`}
+                    >
                       <img
                         src={screenshot.url}
                         alt={screenshot.caption}
@@ -735,8 +752,8 @@ Best regards,
                     }}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       currentImageIndex === idx
-                        ? 'w-8 bg-blue-500'
-                        : 'bg-blue-200 hover:bg-blue-300'
+                        ? "w-8 bg-blue-500"
+                        : "bg-blue-200 hover:bg-blue-300"
                     }`}
                     aria-label={`Go to image ${idx + 1}`}
                   />
@@ -765,7 +782,9 @@ Best regards,
           <div className="flex justify-between items-center">
             <div
               className={`text-2xl font-bold text-blue-400 transition-all duration-700 ${
-                isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
+                isVisible
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 -translate-x-10"
               }`}
             >
               {"Lungani Xulu"}
@@ -779,14 +798,16 @@ Best regards,
                     key={item}
                     onClick={() => scrollToSection(item.toLowerCase())}
                     className={`text-sm font-medium transition-all duration-300 hover:text-blue-400 relative group ${
-                      isVisible ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
+                      isVisible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 -translate-y-4"
                     }`}
                     style={{ transitionDelay: `${idx * 100}ms` }}
                   >
                     {item}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
                   </button>
-                )
+                ),
               )}
             </div>
 
@@ -802,15 +823,17 @@ Best regards,
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div className="md:hidden mt-4 pb-4 space-y-2">
-              {["Home", "About", "Skills", "Projects", "Contact"].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(item.toLowerCase())}
-                  className="block w-full text-left px-4 py-2 hover:text-blue-700 rounded-lg transition-colors"
-                >
-                  {item}
-                </button>
-              ))}
+              {["Home", "About", "Skills", "Projects", "Contact"].map(
+                (item) => (
+                  <button
+                    key={item}
+                    onClick={() => scrollToSection(item.toLowerCase())}
+                    className="block w-full text-left px-4 py-2 hover:text-blue-700 rounded-lg transition-colors"
+                  >
+                    {item}
+                  </button>
+                ),
+              )}
             </div>
           )}
         </div>
@@ -826,7 +849,9 @@ Best regards,
             {/* Left Side - Text Content */}
             <div
               className={`transition-all duration-1000 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+                isVisible
+                  ? "opacity-100 translate-y-0"
+                  : "opacity-0 translate-y-10"
               }`}
             >
               <div className="inline-flex items-center gap-2 mb-4 px-4 py-2 bg-white border border-blue-600 rounded-full text-blue-700 text-sm font-medium">
@@ -859,7 +884,7 @@ Best regards,
                   onClick={() => {
                     const link = document.createElement("a");
                     link.href = resumePDF;
-                    link.download = "Lungani Xulu CV_18-02-2026.pdf";
+                    link.download = "Lungani_Xulu_FullstackDeveloperCV.pdf";
                     document.body.appendChild(link);
                     link.click();
                     document.body.removeChild(link);
@@ -875,7 +900,7 @@ Best regards,
                     key={social.label}
                     href={social.href}
                     onClick={social.onClick || undefined}
-                  className="p-3 bg-white border border-slate-200 text-blue-700 hover:bg-blue-700 hover:text-white rounded-lg transition-all duration-300 hover:scale-110"
+                    className="p-3 bg-white border border-slate-200 text-blue-700 hover:bg-blue-700 hover:text-white rounded-lg transition-all duration-300 hover:scale-110"
                     style={{ animationDelay: `${idx * 100}ms` }}
                     aria-label={social.label}
                     target={social.isExternal ? "_blank" : "_self"}
@@ -890,7 +915,9 @@ Best regards,
             {/* Right Side - Profile Image */}
             <div
               className={`transition-all duration-1000 delay-300 ${
-                isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"
+                isVisible
+                  ? "opacity-100 translate-x-0"
+                  : "opacity-0 translate-x-10"
               }`}
             >
               <div className="relative">
@@ -937,17 +964,21 @@ Best regards,
             </div>
 
             <div className="order-1 md:order-2">
-              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-gray-100">About Me</h2>
+              <h2 className="text-5xl md:text-6xl font-bold mb-6 text-gray-100">
+                About Me
+              </h2>
               <div className="space-y-4 text-gray-300 text-lg leading-relaxed">
                 <p>
-                  I'm a full-stack developer with a keen eye for detail and a love for building
-                  products that feel great to use. I specialize in React on the frontend, while
-                  crafting clean APIs and data layers with .NET.
+                  I'm a full-stack developer with a keen eye for detail and a
+                  love for building products that feel great to use. I
+                  specialize in React on the frontend, while crafting clean APIs
+                  and data layers with .NET.
                 </p>
                 <p>
-                  With a strong foundation in HTML, CSS, and JavaScript, I deliver responsive,
-                  accessible interfaces, and pair them with reliable backend services and MySQL
-                  databases. I enjoy shaping the whole journey from UI to data.
+                  With a strong foundation in HTML, CSS, and JavaScript, I
+                  deliver responsive, accessible interfaces, and pair them with
+                  reliable backend services and MySQL databases. I enjoy shaping
+                  the whole journey from UI to data.
                 </p>
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -974,7 +1005,9 @@ Best regards,
       <section id="skills" className="relative py-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">Tech Stack</h2>
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">
+              Tech Stack
+            </h2>
             <p className="text-gray-400 text-lg">
               Technologies I use to build complete, production-ready systems
             </p>
@@ -993,8 +1026,12 @@ Best regards,
                 {skills.frontend.map((skill) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-300 font-medium">{skill.name}</span>
-                      <span className="text-blue-400 font-semibold">{skill.level}%</span>
+                      <span className="text-gray-300 font-medium">
+                        {skill.name}
+                      </span>
+                      <span className="text-blue-400 font-semibold">
+                        {skill.level}%
+                      </span>
                     </div>
                     <div className="h-2 bg-blue-100 rounded-full overflow-hidden">
                       <div
@@ -1013,14 +1050,20 @@ Best regards,
                 <div className="p-3 bg-white border border-blue-200 rounded-xl">
                   <Laptop size={24} className="text-indigo-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-100">Backend & Data</h3>
+                <h3 className="text-2xl font-bold text-gray-100">
+                  Backend & Data
+                </h3>
               </div>
               <div className="space-y-4">
                 {skills.backend.map((skill) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-300 font-medium">{skill.name}</span>
-                      <span className="text-indigo-400 font-semibold">{skill.level}%</span>
+                      <span className="text-gray-300 font-medium">
+                        {skill.name}
+                      </span>
+                      <span className="text-indigo-400 font-semibold">
+                        {skill.level}%
+                      </span>
                     </div>
                     <div className="h-2 bg-blue-100 rounded-full overflow-hidden">
                       <div
@@ -1039,14 +1082,20 @@ Best regards,
                 <div className="p-3 bg-white border border-blue-200 rounded-xl">
                   <Layout size={24} className="text-blue-400" />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-100">Tools & Workflow</h3>
+                <h3 className="text-2xl font-bold text-gray-100">
+                  Tools & Workflow
+                </h3>
               </div>
               <div className="space-y-4">
                 {skills.tools.map((skill) => (
                   <div key={skill.name}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-gray-300 font-medium">{skill.name}</span>
-                      <span className="text-blue-400 font-semibold">{skill.level}%</span>
+                      <span className="text-gray-300 font-medium">
+                        {skill.name}
+                      </span>
+                      <span className="text-blue-400 font-semibold">
+                        {skill.level}%
+                      </span>
                     </div>
                     <div className="h-2 bg-blue-100 rounded-full overflow-hidden">
                       <div
@@ -1066,8 +1115,12 @@ Best regards,
       <section id="projects" className="relative py-32 px-6 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">Featured Projects</h2>
-            <p className="text-gray-400 text-lg">A showcase of my product and full-stack work</p>
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">
+              Featured Projects
+            </h2>
+            <p className="text-gray-400 text-lg">
+              A showcase of my product and full-stack work
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -1075,7 +1128,9 @@ Best regards,
               <div
                 key={project.title}
                 className={`group bg-white border-2 border-blue-200 rounded-3xl overflow-hidden hover:border-blue-500 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 ${
-                  expandedProject === idx ? "transform-none" : "hover:-translate-y-1"
+                  expandedProject === idx
+                    ? "transform-none"
+                    : "hover:-translate-y-1"
                 }`}
               >
                 {/* Project Header - Clickable */}
@@ -1095,7 +1150,9 @@ Best regards,
                           <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">
                             {project.title}
                           </h3>
-                          <p className="text-white/90 text-sm drop-shadow-md">{project.category}</p>
+                          <p className="text-white/90 text-sm drop-shadow-md">
+                            {project.category}
+                          </p>
                         </div>
                       </div>
                     </div>
@@ -1132,10 +1189,14 @@ Best regards,
                   <h3 className="text-2xl font-bold mb-3 text-gray-100 group-hover:text-blue-400 transition-colors">
                     {project.title}
                   </h3>
-                  <p className="text-gray-400 mb-4 leading-relaxed">{project.description}</p>
+                  <p className="text-gray-400 mb-4 leading-relaxed">
+                    {project.description}
+                  </p>
 
                   <div className="mb-4">
-                    <h4 className="text-sm font-semibold text-gray-500 mb-2">Tech Stack:</h4>
+                    <h4 className="text-sm font-semibold text-gray-500 mb-2">
+                      Tech Stack:
+                    </h4>
                     <div className="flex flex-wrap gap-2">
                       {project.tech.map((tech) => (
                         <span
@@ -1149,10 +1210,15 @@ Best regards,
                   </div>
 
                   <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-gray-500 mb-2">Key Features:</h4>
+                    <h4 className="text-sm font-semibold text-gray-500 mb-2">
+                      Key Features:
+                    </h4>
                     <ul className="grid grid-cols-2 gap-2">
                       {project.features.map((feature) => (
-                        <li key={feature} className="text-sm text-gray-400 flex items-center gap-2">
+                        <li
+                          key={feature}
+                          className="text-sm text-gray-400 flex items-center gap-2"
+                        >
                           <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
                           {feature}
                         </li>
@@ -1164,56 +1230,77 @@ Best regards,
                   {expandedProject === idx && (
                     <div className="mt-6 pt-6 border-t-2 border-blue-200 animate-fadeIn">
                       <h4 className="text-lg font-semibold text-gray-100 mb-4">
-                        {project.type === "mobile" ? "App Screenshots" : "Website Screenshots"}
+                        {project.type === "mobile"
+                          ? "App Screenshots"
+                          : "Website Screenshots"}
                       </h4>
 
                       {/* Screenshots Grid with Modal Trigger */}
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-                        {project.screenshots.map((screenshot, screenshotIdx) => (
-                          <div
-                            key={screenshotIdx}
-                            className="group/screenshot relative rounded-lg overflow-hidden border-2 border-blue-200 hover:border-blue-500 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/10"
-                            onClick={() => openModal(project, screenshot.url, screenshotIdx)}
-                          >
-                            <div className={`${getAspectRatio(project.type)} bg-white`}>
-                              <img
-                                src={screenshot.url}
-                                alt={screenshot.caption}
-                                className="w-full h-full object-contain transition-transform duration-500 group-hover/screenshot:scale-110"
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = `https://via.placeholder.com/${
-                                    project.type === "mobile" ? "300x600" : "600x338"
-                                  }/${
-                                    project.color === "bg-blue-800"
-                                      ? "1e3a8a"
-                                      : project.color === "bg-gradient-to-r from-blue-900 to-blue-600"
-                                      ? "1e40af"
-                                      : "0f172a"
-                                  }/ffffff?text=${project.title}+${screenshot.caption.replace(
-                                    " ",
-                                    "+"
-                                  )}`;
-                                }}
-                              />
-                            </div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover/screenshot:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3">
-                              <p className="text-white text-xs font-medium truncate flex-1">
-                                {screenshot.caption}
-                              </p>
-                              <div className="bg-blue-600 rounded-full p-1.5 transform translate-y-2 group-hover/screenshot:translate-y-0 transition-transform duration-300">
-                                <ExternalLink size={12} className="text-white" />
+                        {project.screenshots.map(
+                          (screenshot, screenshotIdx) => (
+                            <div
+                              key={screenshotIdx}
+                              className="group/screenshot relative rounded-lg overflow-hidden border-2 border-blue-200 hover:border-blue-500 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-xl hover:shadow-blue-500/10"
+                              onClick={() =>
+                                openModal(
+                                  project,
+                                  screenshot.url,
+                                  screenshotIdx,
+                                )
+                              }
+                            >
+                              <div
+                                className={`${getAspectRatio(project.type)} bg-white`}
+                              >
+                                <img
+                                  src={screenshot.url}
+                                  alt={screenshot.caption}
+                                  className="w-full h-full object-contain transition-transform duration-500 group-hover/screenshot:scale-110"
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = `https://via.placeholder.com/${
+                                      project.type === "mobile"
+                                        ? "300x600"
+                                        : "600x338"
+                                    }/${
+                                      project.color === "bg-blue-800"
+                                        ? "1e3a8a"
+                                        : project.color ===
+                                            "bg-gradient-to-r from-blue-900 to-blue-600"
+                                          ? "1e40af"
+                                          : "0f172a"
+                                    }/ffffff?text=${project.title}+${screenshot.caption.replace(
+                                      " ",
+                                      "+",
+                                    )}`;
+                                  }}
+                                />
+                              </div>
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover/screenshot:opacity-100 transition-opacity duration-300 flex items-end justify-between p-3">
+                                <p className="text-white text-xs font-medium truncate flex-1">
+                                  {screenshot.caption}
+                                </p>
+                                <div className="bg-blue-600 rounded-full p-1.5 transform translate-y-2 group-hover/screenshot:translate-y-0 transition-transform duration-300">
+                                  <ExternalLink
+                                    size={12}
+                                    className="text-white"
+                                  />
+                                </div>
+                              </div>
+
+                              {/* Hover overlay with zoom effect */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/screenshot:opacity-100 transition-all duration-300 flex items-center justify-center">
+                                <div className="bg-blue-600/90 rounded-full p-3 transform scale-0 group-hover/screenshot:scale-100 transition-transform duration-300">
+                                  <ExternalLink
+                                    size={20}
+                                    className="text-white"
+                                  />
+                                </div>
                               </div>
                             </div>
-                            
-                            {/* Hover overlay with zoom effect */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover/screenshot:opacity-100 transition-all duration-300 flex items-center justify-center">
-                              <div className="bg-blue-600/90 rounded-full p-3 transform scale-0 group-hover/screenshot:scale-100 transition-transform duration-300">
-                                <ExternalLink size={20} className="text-white" />
-                              </div>
-                            </div>
-                          </div>
-                        ))}
+                          ),
+                        )}
                       </div>
 
                       {/* GitHub Button */}
@@ -1264,8 +1351,12 @@ Best regards,
       <section id="contact" className="relative py-32 px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">Let's Work Together</h2>
-            <p className="text-gray-400 text-lg">Have a project in mind? I'd love to hear from you</p>
+            <h2 className="text-5xl md:text-6xl font-bold mb-4 text-gray-100">
+              Let's Work Together
+            </h2>
+            <p className="text-gray-400 text-lg">
+              Have a project in mind? I'd love to hear from you
+            </p>
           </div>
 
           <div className="bg-white border-2 border-blue-200 rounded-3xl p-8 md:p-12 shadow-xl">
@@ -1308,7 +1399,9 @@ Best regards,
                         Click to open with pre-filled template
                       </span>
                     </a>
-                    <p className="text-gray-500 text-sm mt-4">I typically respond within 24 hours</p>
+                    <p className="text-gray-500 text-sm mt-4">
+                      I typically respond within 24 hours
+                    </p>
                   </div>
                 </div>
               </div>
